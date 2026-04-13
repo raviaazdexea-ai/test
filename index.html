@@ -2,16 +2,33 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Naga Realistis</title>
+<title>Naga + Output</title>
 <style>
   body {
     margin: 0;
     overflow: hidden;
     background: black;
-    cursor: none;
+    cursor: default;
+    font-family: monospace;
   }
+
   canvas {
     display: block;
+  }
+
+  /* Panel info */
+  #info {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    color: #00ffcc;
+    background: rgba(0,0,0,0.6);
+    padding: 10px;
+    border: 1px solid #00ffcc;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    min-width: 160px;
   }
 </style>
 </head>
@@ -19,14 +36,22 @@
 
 <canvas id="canvas"></canvas>
 
+<div id="info">
+  X: 0<br>
+  Y: 0<br>
+  Speed: 0
+</div>
+
 <script>
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+const info = document.getElementById("info");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+let lastHead = { x: mouse.x, y: mouse.y };
 
 window.addEventListener("mousemove", e => {
   mouse.x = e.clientX;
@@ -44,11 +69,9 @@ class Dragon {
   }
 
   update() {
-    // kepala mengikuti mouse
     this.points[0].x += (mouse.x - this.points[0].x) * 0.2;
     this.points[0].y += (mouse.y - this.points[0].y) * 0.2;
 
-    // tubuh mengikuti dengan delay + efek gelombang
     for (let i = 1; i < this.points.length; i++) {
       const prev = this.points[i - 1];
       const p = this.points[i];
@@ -57,14 +80,11 @@ class Dragon {
       let dy = prev.y - p.y;
 
       let angle = Math.atan2(dy, dx);
-
-      // jarak antar segmen
       let distance = 12;
 
       p.x = prev.x - Math.cos(angle) * distance;
       p.y = prev.y - Math.sin(angle) * distance;
 
-      // efek goyangan naga
       let wave = Math.sin((Date.now() * 0.005) + i * 0.5) * 2;
       p.x += Math.cos(angle + Math.PI/2) * wave;
       p.y += Math.sin(angle + Math.PI/2) * wave;
@@ -78,7 +98,6 @@ class Dragon {
       let p = this.points[i];
       let next = this.points[i - 1];
 
-      // ukuran makin kecil ke belakang
       let size = (this.length - i) * 0.6;
 
       ctx.beginPath();
@@ -89,7 +108,6 @@ class Dragon {
       ctx.stroke();
     }
 
-    // kepala naga (glow)
     let head = this.points[0];
 
     let gradient = ctx.createRadialGradient(
@@ -105,6 +123,10 @@ class Dragon {
     ctx.arc(head.x, head.y, 20, 0, Math.PI * 2);
     ctx.fill();
   }
+
+  getHead() {
+    return this.points[0];
+  }
 }
 
 const dragon = new Dragon(60);
@@ -115,6 +137,24 @@ function animate() {
 
   dragon.update();
   dragon.draw();
+
+  // === OUTPUT INFO ===
+  const head = dragon.getHead();
+
+  let dx = head.x - lastHead.x;
+  let dy = head.y - lastHead.y;
+  let speed = Math.sqrt(dx*dx + dy*dy).toFixed(2);
+
+  info.innerHTML = `
+    Mouse X: ${mouse.x.toFixed(0)}<br>
+    Mouse Y: ${mouse.y.toFixed(0)}<br>
+    Head X: ${head.x.toFixed(0)}<br>
+    Head Y: ${head.y.toFixed(0)}<br>
+    Speed: ${speed}
+  `;
+
+  lastHead.x = head.x;
+  lastHead.y = head.y;
 
   requestAnimationFrame(animate);
 }
