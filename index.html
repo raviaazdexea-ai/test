@@ -2,13 +2,13 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Naga + Output</title>
+<title>Naga Makan Cursor</title>
 <style>
   body {
     margin: 0;
     overflow: hidden;
     background: black;
-    cursor: default;
+    cursor: crosshair;
     font-family: monospace;
   }
 
@@ -16,7 +16,6 @@
     display: block;
   }
 
-  /* Panel info */
   #info {
     position: fixed;
     top: 10px;
@@ -27,8 +26,6 @@
     border: 1px solid #00ffcc;
     border-radius: 8px;
     font-size: 14px;
-    line-height: 1.5;
-    min-width: 160px;
   }
 </style>
 </head>
@@ -36,11 +33,7 @@
 
 <canvas id="canvas"></canvas>
 
-<div id="info">
-  X: 0<br>
-  Y: 0<br>
-  Speed: 0
-</div>
+<div id="info">Status: Idle</div>
 
 <script>
 const canvas = document.getElementById("canvas");
@@ -50,8 +43,8 @@ const info = document.getElementById("info");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
-let lastHead = { x: mouse.x, y: mouse.y };
+let mouse = { x: canvas.width/2, y: canvas.height/2 };
+let biteEffect = 0;
 
 window.addEventListener("mousemove", e => {
   mouse.x = e.clientX;
@@ -85,9 +78,9 @@ class Dragon {
       p.x = prev.x - Math.cos(angle) * distance;
       p.y = prev.y - Math.sin(angle) * distance;
 
-      let wave = Math.sin((Date.now() * 0.005) + i * 0.5) * 2;
-      p.x += Math.cos(angle + Math.PI/2) * wave;
-      p.y += Math.sin(angle + Math.PI/2) * wave;
+      let wave = Math.sin((Date.now()*0.005)+i*0.5)*2;
+      p.x += Math.cos(angle + Math.PI/2)*wave;
+      p.y += Math.sin(angle + Math.PI/2)*wave;
     }
   }
 
@@ -97,7 +90,6 @@ class Dragon {
     for (let i = this.points.length - 1; i > 0; i--) {
       let p = this.points[i];
       let next = this.points[i - 1];
-
       let size = (this.length - i) * 0.6;
 
       ctx.beginPath();
@@ -110,18 +102,45 @@ class Dragon {
 
     let head = this.points[0];
 
+    // cek jarak ke cursor
+    let dx = head.x - mouse.x;
+    let dy = head.y - mouse.y;
+    let dist = Math.sqrt(dx*dx + dy*dy);
+
+    let eating = dist < 25;
+
+    if (eating) {
+      biteEffect = 10;
+      info.innerHTML = "Status: EATING 😈";
+    } else {
+      info.innerHTML = "Status: Hunting...";
+    }
+
+    // efek kepala
+    let radius = eating ? 25 : 18;
+
     let gradient = ctx.createRadialGradient(
       head.x, head.y, 2,
-      head.x, head.y, 20
+      head.x, head.y, radius
     );
 
-    gradient.addColorStop(0, "#ffffff");
+    gradient.addColorStop(0, eating ? "#ff4444" : "#ffffff");
     gradient.addColorStop(1, "rgba(255,255,255,0)");
 
     ctx.beginPath();
     ctx.fillStyle = gradient;
-    ctx.arc(head.x, head.y, 20, 0, Math.PI * 2);
+    ctx.arc(head.x, head.y, radius, 0, Math.PI*2);
     ctx.fill();
+
+    // efek gigitan (pulse)
+    if (biteEffect > 0) {
+      ctx.beginPath();
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 2;
+      ctx.arc(mouse.x, mouse.y, 20 + biteEffect, 0, Math.PI*2);
+      ctx.stroke();
+      biteEffect--;
+    }
   }
 
   getHead() {
@@ -137,24 +156,6 @@ function animate() {
 
   dragon.update();
   dragon.draw();
-
-  // === OUTPUT INFO ===
-  const head = dragon.getHead();
-
-  let dx = head.x - lastHead.x;
-  let dy = head.y - lastHead.y;
-  let speed = Math.sqrt(dx*dx + dy*dy).toFixed(2);
-
-  info.innerHTML = `
-    Mouse X: ${mouse.x.toFixed(0)}<br>
-    Mouse Y: ${mouse.y.toFixed(0)}<br>
-    Head X: ${head.x.toFixed(0)}<br>
-    Head Y: ${head.y.toFixed(0)}<br>
-    Speed: ${speed}
-  `;
-
-  lastHead.x = head.x;
-  lastHead.y = head.y;
 
   requestAnimationFrame(animate);
 }
