@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Naga Mengikuti Mouse</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      cursor: none;
+    }
+
+    .segment {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .head {
+      width: 18px;
+      height: 18px;
+      background: #ffffff;
+      box-shadow: 0 0 10px white;
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  const segmentCount = 40;
+  const segments = [];
+
+  // posisi awal
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+
+  // buat tubuh naga
+  for (let i = 0; i < segmentCount; i++) {
+    const div = document.createElement("div");
+    div.classList.add("segment");
+    if (i === 0) div.classList.add("head");
+    document.body.appendChild(div);
+
+    segments.push({
+      el: div,
+      x: mouseX,
+      y: mouseY
+    });
+  }
+
+  // update posisi mouse
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animate() {
+    // kepala mengikuti mouse
+    segments[0].x += (mouseX - segments[0].x) * 0.2;
+    segments[0].y += (mouseY - segments[0].y) * 0.2;
+
+    // tubuh mengikuti kepala
+    for (let i = 1; i < segments.length; i++) {
+      segments[i].x += (segments[i - 1].x - segments[i].x) * 0.3;
+      segments[i].y += (segments[i - 1].y - segments[i].y) * 0.3;
+    }
+
+    // render ke layar
+    segments.forEach(seg => {
+      seg.el.style.transform = `translate(${seg.x}px, ${seg.y}px)`;
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
+</body>
+</html>
