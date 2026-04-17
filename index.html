@@ -1,173 +1,195 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Naga Kepala Jelas</title>
-<style>
-  body {
-    margin: 0;
-    overflow: hidden;
-    background: black;
-    cursor: crosshair;
-  }
-  canvas { display: block; }
-</style>
+  <title>Toko Online Demo</title>
+  <style>
+    body { font-family: Arial; text-align: center; background: #f5f5f5; }
+    .hidden { display: none; }
+    .box { background: white; padding: 20px; margin: 20px auto; width: 300px; border-radius: 10px; }
+    input { margin: 5px; padding: 8px; width: 90%; }
+    button { padding: 8px 15px; margin-top: 5px; cursor: pointer; }
+    .product { background: white; margin: 10px; padding: 10px; border-radius: 10px; }
+  </style>
 </head>
 <body>
 
-<canvas id="canvas"></canvas>
+<h1>Toko Online Demo</h1>
+
+<!-- REGISTER -->
+<div id="registerPage" class="box">
+  <h2>Register</h2>
+  <input type="text" id="regUser" placeholder="Username"><br>
+  <input type="password" id="regPass" placeholder="Password"><br>
+  <button onclick="register()">Register</button>
+  <p>Sudah punya akun? <a href="#" onclick="showLogin()">Login</a></p>
+</div>
+
+<!-- LOGIN -->
+<div id="loginPage" class="box hidden">
+  <h2>Login</h2>
+  <input type="text" id="logUser" placeholder="Username"><br>
+  <input type="password" id="logPass" placeholder="Password"><br>
+  <button onclick="login()">Login</button>
+</div>
+
+<!-- SHOP -->
+<div id="shopPage" class="hidden">
+  <p id="welcome"></p>
+  <button onclick="logout()">Logout</button>
+
+  <h2>Produk</h2>
+
+  <div class="product">
+    <h3>Kaos</h3>
+    <p>Rp50.000</p>
+    <button onclick="addToCart('Kaos', 50000)">Beli</button>
+  </div>
+
+  <div class="product">
+    <h3>Sepatu</h3>
+    <p>Rp150.000</p>
+    <button onclick="addToCart('Sepatu', 150000)">Beli</button>
+  </div>
+
+  <h3>Keranjang</h3>
+  <ul id="cartList"></ul>
+  <p id="total"></p>
+</div>
+
+<!-- ADMIN -->
+<div id="adminPage" class="box hidden">
+  <h2>HALAMAN ADMIN</h2>
+  <button onclick="logout()">Logout</button>
+
+  <p>Selamat datang ADMIN!</p>
+
+  <h3>Daftar User:</h3>
+  <ul id="userList"></ul>
+</div>
+
+<p id="message"></p>
 
 <script>
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+// REGISTER
+function register() {
+  let user = regUser.value;
+  let pass = regPass.value;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let mouse = { x: canvas.width/2, y: canvas.height/2 };
-
-window.addEventListener("mousemove", e => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-class Dragon {
-  constructor(length) {
-    this.points = [];
-    this.spacing = 10;
-
-    for (let i = 0; i < length; i++) {
-      this.points.push({ x: mouse.x, y: mouse.y });
-    }
-  }
-
-  update() {
-    this.points[0].x += (mouse.x - this.points[0].x) * 0.15;
-    this.points[0].y += (mouse.y - this.points[0].y) * 0.15;
-
-    for (let i = 1; i < this.points.length; i++) {
-      let prev = this.points[i - 1];
-      let curr = this.points[i];
-
-      let dx = curr.x - prev.x;
-      let dy = curr.y - prev.y;
-      let dist = Math.sqrt(dx*dx + dy*dy);
-
-      if (dist > 0) {
-        let diff = (dist - this.spacing) / dist;
-        curr.x -= dx * diff;
-        curr.y -= dy * diff;
-      }
-    }
-  }
-
-  drawBody() {
-    ctx.lineCap = "round";
-
-    for (let i = this.points.length - 1; i > 0; i--) {
-      let p = this.points[i];
-      let next = this.points[i - 1];
-
-      let size = (this.points.length - i) * 0.7;
-
-      ctx.beginPath();
-      ctx.strokeStyle = "white";
-      ctx.lineWidth = size;
-      ctx.moveTo(p.x, p.y);
-      ctx.lineTo(next.x, next.y);
-      ctx.stroke();
-    }
-  }
-
-  drawHead() {
-    let head = this.points[0];
-    let next = this.points[1];
-
-    let angle = Math.atan2(next.y - head.y, next.x - head.x);
-
-    ctx.save();
-    ctx.translate(head.x, head.y);
-    ctx.rotate(angle);
-
-    ctx.fillStyle = "white";
-
-    // === KEPALA BESAR ===
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(35, -12);
-    ctx.lineTo(60, -8);
-    ctx.lineTo(70, 0);
-    ctx.lineTo(60, 8);
-    ctx.lineTo(35, 12);
-    ctx.closePath();
-    ctx.fill();
-
-    // === RAHANG BAWAH ===
-    ctx.beginPath();
-    ctx.moveTo(25, 10);
-    ctx.lineTo(60, 20);
-    ctx.lineTo(40, 12);
-    ctx.closePath();
-    ctx.fill();
-
-    // === TANDUK ATAS ===
-    ctx.beginPath();
-    ctx.moveTo(20, -10);
-    ctx.lineTo(35, -30);
-    ctx.lineTo(10, -15);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.moveTo(40, -8);
-    ctx.lineTo(55, -25);
-    ctx.lineTo(30, -12);
-    ctx.closePath();
-    ctx.fill();
-
-    // === GIGI ===
-    ctx.fillStyle = "black";
-    for (let i = 0; i < 5; i++) {
-      ctx.beginPath();
-      ctx.moveTo(40 + i*5, 5);
-      ctx.lineTo(42 + i*5, 10);
-      ctx.lineTo(38 + i*5, 10);
-      ctx.fill();
-    }
-
-    // === MATA ===
-    ctx.fillStyle = "black";
-    ctx.beginPath();
-    ctx.arc(40, -3, 3, 0, Math.PI*2);
-    ctx.fill();
-
-    ctx.restore();
-  }
-
-  draw() {
-    this.drawBody();
-    this.drawHead();
+  if(user && pass) {
+    localStorage.setItem(user, pass);
+    message.innerText = "Register berhasil!";
+    showLogin();
+  } else {
+    message.innerText = "Isi semua data!";
   }
 }
 
-const dragon = new Dragon(50);
+// LOGIN
+function login() {
+  let user = logUser.value;
+  let pass = logPass.value;
 
-function animate() {
-  ctx.fillStyle = "rgba(0,0,0,0.3)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // ADMIN LOGIN
+  if(user === "ADMINDEDI" && pass === "PASSWORDEDI") {
+    localStorage.setItem("role", "admin");
+    showAdmin();
+    return;
+  }
 
-  dragon.update();
-  dragon.draw();
+  // USER LOGIN
+  let savedPass = localStorage.getItem(user);
 
-  requestAnimationFrame(animate);
+  if(savedPass === pass) {
+    localStorage.setItem("loginUser", user);
+    localStorage.setItem("role", "user");
+    showShop();
+  } else {
+    message.innerText = "Login gagal!";
+  }
 }
 
-animate();
+// LOGOUT
+function logout() {
+  localStorage.clear();
+  location.reload();
+}
 
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
+// NAVIGASI
+function showLogin() {
+  registerPage.classList.add("hidden");
+  loginPage.classList.remove("hidden");
+}
+
+function showShop() {
+  loginPage.classList.add("hidden");
+  registerPage.classList.add("hidden");
+  shopPage.classList.remove("hidden");
+
+  let user = localStorage.getItem("loginUser");
+  welcome.innerText = "Halo, " + user;
+
+  loadCart();
+}
+
+// ADMIN
+function showAdmin() {
+  loginPage.classList.add("hidden");
+  registerPage.classList.add("hidden");
+  shopPage.classList.add("hidden");
+  adminPage.classList.remove("hidden");
+
+  loadUsers();
+}
+
+function loadUsers() {
+  userList.innerHTML = "";
+
+  for(let i = 0; i < localStorage.length; i++) {
+    let key = localStorage.key(i);
+
+    if(key !== "loginUser" && key !== "role" && key !== "cart") {
+      let li = document.createElement("li");
+      li.innerText = key;
+      userList.appendChild(li);
+    }
+  }
+}
+
+// CART
+function addToCart(item, price) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push({item, price});
+  localStorage.setItem("cart", JSON.stringify(cart));
+  loadCart();
+}
+
+function loadCart() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cartList.innerHTML = "";
+
+  let totalHarga = 0;
+
+  cart.forEach(data => {
+    let li = document.createElement("li");
+    li.innerText = data.item + " - Rp" + data.price;
+    cartList.appendChild(li);
+
+    totalHarga += data.price;
+  });
+
+  total.innerText = "Total: Rp" + totalHarga;
+}
+
+// AUTO LOGIN
+window.onload = function() {
+  let role = localStorage.getItem("role");
+
+  if(role === "admin") {
+    showAdmin();
+  } else if(localStorage.getItem("loginUser")) {
+    showShop();
+  }
+}
 </script>
 
 </body>
