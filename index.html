@@ -3,72 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AM Services | Jasa Edit Alight Motion</title>
+    <title>Katalog Jasa Edit Alight Motion</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .gradient-bg { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
-        .card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .card:hover { border-color: #3b82f6; transform: scale(1.02); transition: all 0.3s ease; }
     </style>
 </head>
-<body class="gradient-bg text-white min-h-screen">
+<body class="text-slate-200 min-h-screen">
 
-    <nav class="p-6 flex justify-between items-center max-w-6xl mx-auto">
-        <h1 class="text-2xl font-bold tracking-tighter text-blue-400">AM<span class="text-white">EDIT</span></h1>
-        <a href="#order" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-full text-sm font-semibold transition">Order Sekarang</a>
+    <nav class="p-6 max-w-5xl mx-auto flex justify-between items-center">
+        <div class="text-2xl font-black tracking-widest text-blue-500">AM STORE</div>
+        <div class="text-xs bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full border border-blue-500/30">Open Service</div>
     </nav>
 
-    <header class="text-center py-16 px-4">
-        <h2 class="text-4xl md:text-6xl font-extrabold mb-4">Jasa Edit Alight Motion</h2>
-        <p class="text-gray-400 max-w-2xl mx-auto">Tingkatkan kualitas konten visualmu dengan preset dan editing berkualitas tinggi. Cepat, profesional, dan hasil memuaskan.</p>
-    </header>
+    <main class="max-w-5xl mx-auto px-6 py-10">
+        <header class="mb-12 text-center md:text-left">
+            <h1 class="text-4xl font-bold mb-2">Pricelist Jasa Edit</h1>
+            <p class="text-slate-400">Proses cepat, hasil berkualitas, harga pelajar.</p>
+        </header>
 
-    <main class="max-w-6xl mx-auto px-6 pb-20">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             
-            <div class="card bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-xl">
-                <div class="text-blue-400 text-3xl mb-4"><i class="fas fa-camera"></i></div>
-                <h3 class="text-xl font-bold mb-2">Preset Photography</h3>
-                <p class="text-gray-400 text-sm mb-4">Color grading estetik untuk foto dan video cinematic ala pro.</p>
-                <p class="text-blue-400 font-bold">Mulai Rp 10rb</p>
+            <div class="card glass p-6 rounded-2xl flex justify-between items-center">
+                <div>
+                    <span class="text-blue-500 font-mono text-sm">#01</span>
+                    <h3 class="text-xl font-bold">Preset Photography</h3>
+                    <p class="text-sm text-slate-400 italic">Tone warna estetik & cinematic</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-2xl font-black text-white">15k</span>
+                </div>
             </div>
 
-            <div class="card bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-xl">
-                <div class="text-purple-400 text-3xl mb-4"><i class="fas fa-cube"></i></div>
-                <h3 class="text-xl font-bold mb-2">JJ 3D Style</h3>
-                <h3 class="text-sm text-gray-500 mb-2">(Jedag Jedug)</h3>
-                <p class="text-gray-400 text-sm mb-4">Edit video musik dengan efek 3D transisi halus dan smooth.</p>
-                <p class="text-purple-400 font-bold">Mulai Rp 20rb</p>
+            <div class="card glass p-6 rounded-2xl flex justify-between items-center">
+                <div>
+                    <span class="text-blue-500 font-mono text-sm">#02</span>
+                    <h3 class="text-xl font-bold">JJ 3D</h3>
+                    <p class="text-sm text-slate-400">Smooth transition & efek 3D</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-2xl font-black text-white">10k</span>
+                </div>
             </div>
 
-            <div class="card bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-xl">
-                <div class="text-green-400 text-3xl mb-4"><i class="fas fa-image"></i></div>
-                <h3 class="text-xl font-bold mb-2">Desain Poster</h3>
-                <p class="text-gray-400 text-sm mb-4">Poster event, promosi, atau fan-art dengan layout modern.</p>
-                <p class="text-green-400 font-bold">Mulai Rp 15rb</p>
+            <div class="card glass p-6 rounded-2xl flex justify-between items-center">
+                <div>
+                    <span class="text-blue-500 font-mono text-sm">#03</span>
+                    <h3 class="text-xl font-bold">Poster Design</h3>
+                    <p class="text-sm text-slate-400">Layout rapi & keren</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-2xl font-black text-white">5k</span>
+                </div>
             </div>
 
-            <div class="card bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-xl">
-                <div class="text-red-400 text-3xl mb-4"><i class="fas fa-pen-nib"></i></div>
-                <h3 class="text-xl font-bold mb-2">Edit Logo</h3>
-                <p class="text-gray-400 text-sm mb-4">Re-design atau pembuatan logo minimalis untuk branding.</p>
-                <p class="text-red-400 font-bold">Mulai Rp 25rb</p>
+            <div class="card glass p-6 rounded-2xl flex justify-between items-center">
+                <div>
+                    <span class="text-blue-500 font-mono text-sm">#04</span>
+                    <h3 class="text-xl font-bold">Edit Logo</h3>
+                    <p class="text-sm text-slate-400">Desain logo simpel & menarik</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-2xl font-black text-white">5k</span>
+                </div>
             </div>
 
         </div>
 
-        <section id="order" class="mt-20 bg-blue-900/30 border border-blue-500/50 p-10 rounded-3xl text-center">
-            <h2 class="text-3xl font-bold mb-4">Siap Memulai Project?</h2>
-            <p class="mb-8 text-gray-300">Klik tombol di bawah untuk konsultasi via WhatsApp</p>
-            <a href="https://wa.me/628123456789" class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg inline-flex items-center gap-2 transition">
-                <i class="fab fa-whatsapp"></i> Hubungi WhatsApp
+        <div class="mt-12">
+            <a href="https://wa.me/628123456789" class="block w-full bg-blue-600 hover:bg-blue-700 text-center text-white font-bold py-4 rounded-2xl shadow-lg shadow-blue-900/20 transition duration-300">
+                <i class="fab fa-whatsapp mr-2"></i> Order via WhatsApp
             </a>
-        </section>
+        </div>
     </main>
 
-    <footer class="text-center py-10 border-t border-gray-800 text-gray-500 text-sm">
-        <p>&copy; 2026 AM Services. Build with ❤️ for Editors.</p>
+    <footer class="text-center pb-10 text-slate-500 text-xs uppercase tracking-widest">
+        &copy; 2026 Alight Motion Editing Service
     </footer>
 
 </body>
