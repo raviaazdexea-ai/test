@@ -1,226 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Toko Online Demo Pro</title>
-  <style>
-    body { font-family: Arial; text-align: center; background: #f5f5f5; }
-    .hidden { display: none; }
-    .box { background: white; padding: 20px; margin: 20px auto; width: 320px; border-radius: 10px; }
-    input { margin: 5px; padding: 8px; width: 90%; }
-    button { padding: 8px 15px; margin: 5px; cursor: pointer; }
-    .product { background: white; margin: 10px; padding: 10px; border-radius: 10px; }
-    img { width: 100px; height: 100px; object-fit: cover; }
-    #message { color: red; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AM Services | Jasa Edit Alight Motion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+        .card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+    </style>
 </head>
-<body>
+<body class="gradient-bg text-white min-h-screen">
 
-<h1>Toko Online Demo Pro</h1>
+    <nav class="p-6 flex justify-between items-center max-w-6xl mx-auto">
+        <h1 class="text-2xl font-bold tracking-tighter text-blue-400">AM<span class="text-white">EDIT</span></h1>
+        <a href="#order" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-full text-sm font-semibold transition">Order Sekarang</a>
+    </nav>
 
-<!-- REGISTER -->
-<div id="registerPage" class="box">
-  <h2>Register</h2>
-  <input type="text" id="regUser" placeholder="Username"><br>
-  <input type="password" id="regPass" placeholder="Password"><br>
-  <button onclick="register()">Register</button>
-  <p>Sudah punya akun? <a href="#" onclick="showLogin()">Login</a></p>
-</div>
+    <header class="text-center py-16 px-4">
+        <h2 class="text-4xl md:text-6xl font-extrabold mb-4">Jasa Edit Alight Motion</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">Tingkatkan kualitas konten visualmu dengan preset dan editing berkualitas tinggi. Cepat, profesional, dan hasil memuaskan.</p>
+    </header>
 
-<!-- LOGIN -->
-<div id="loginPage" class="box hidden">
-  <h2>Login</h2>
-  <input type="text" id="logUser" placeholder="Username"><br>
-  <input type="password" id="logPass" placeholder="Password"><br>
-  <button onclick="login()">Login</button>
-</div>
+    <main class="max-w-6xl mx-auto px-6 pb-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="card bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-xl">
+                <div class="text-blue-400 text-3xl mb-4"><i class="fas fa-camera"></i></div>
+                <h3 class="text-xl font-bold mb-2">Preset Photography</h3>
+                <p class="text-gray-400 text-sm mb-4">Color grading estetik untuk foto dan video cinematic ala pro.</p>
+                <p class="text-blue-400 font-bold">Mulai Rp 10rb</p>
+            </div>
 
-<!-- SHOP -->
-<div id="shopPage" class="hidden">
-  <p id="welcome"></p>
-  <button onclick="logout()">Logout</button>
+            <div class="card bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-xl">
+                <div class="text-purple-400 text-3xl mb-4"><i class="fas fa-cube"></i></div>
+                <h3 class="text-xl font-bold mb-2">JJ 3D Style</h3>
+                <h3 class="text-sm text-gray-500 mb-2">(Jedag Jedug)</h3>
+                <p class="text-gray-400 text-sm mb-4">Edit video musik dengan efek 3D transisi halus dan smooth.</p>
+                <p class="text-purple-400 font-bold">Mulai Rp 20rb</p>
+            </div>
 
-  <h2>Produk</h2>
-  <div id="productList"></div>
-</div>
+            <div class="card bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-xl">
+                <div class="text-green-400 text-3xl mb-4"><i class="fas fa-image"></i></div>
+                <h3 class="text-xl font-bold mb-2">Desain Poster</h3>
+                <p class="text-gray-400 text-sm mb-4">Poster event, promosi, atau fan-art dengan layout modern.</p>
+                <p class="text-green-400 font-bold">Mulai Rp 15rb</p>
+            </div>
 
-<!-- ADMIN -->
-<div id="adminPage" class="hidden">
-  <h2>ADMIN PANEL</h2>
-  <button onclick="logout()">Logout</button>
+            <div class="card bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-xl">
+                <div class="text-red-400 text-3xl mb-4"><i class="fas fa-pen-nib"></i></div>
+                <h3 class="text-xl font-bold mb-2">Edit Logo</h3>
+                <p class="text-gray-400 text-sm mb-4">Re-design atau pembuatan logo minimalis untuk branding.</p>
+                <p class="text-red-400 font-bold">Mulai Rp 25rb</p>
+            </div>
 
-  <h3>Tambah Produk</h3>
-  <input type="text" id="pName" placeholder="Nama Produk"><br>
-  <input type="number" id="pPrice" placeholder="Harga"><br>
-  <input type="file" id="pImage"><br>
-  <button onclick="addProduct()">Tambah</button>
+        </div>
 
-  <h3>Daftar Produk</h3>
-  <div id="adminProductList"></div>
-</div>
+        <section id="order" class="mt-20 bg-blue-900/30 border border-blue-500/50 p-10 rounded-3xl text-center">
+            <h2 class="text-3xl font-bold mb-4">Siap Memulai Project?</h2>
+            <p class="mb-8 text-gray-300">Klik tombol di bawah untuk konsultasi via WhatsApp</p>
+            <a href="https://wa.me/628123456789" class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg inline-flex items-center gap-2 transition">
+                <i class="fab fa-whatsapp"></i> Hubungi WhatsApp
+            </a>
+        </section>
+    </main>
 
-<p id="message"></p>
-
-<script>
-// REGISTER
-function register() {
-  if(regUser.value && regPass.value) {
-    localStorage.setItem(regUser.value, regPass.value);
-    message.innerText = "Register berhasil!";
-    showLogin();
-  } else {
-    message.innerText = "Isi semua data!";
-  }
-}
-
-// LOGIN
-function login() {
-  let user = logUser.value;
-  let pass = logPass.value;
-
-  // ADMIN
-  if(user === "ADMINDEDI" && pass === "PASSWORDEDI") {
-    localStorage.setItem("role", "admin");
-    showAdmin();
-    return;
-  }
-
-  let savedPass = localStorage.getItem(user);
-
-  // USER BELUM ADA
-  if(savedPass === null) {
-    message.innerText = "Akun belum terdaftar, silakan register terlebih dahulu!";
-    return;
-  }
-
-  // PASSWORD SALAH
-  if(savedPass !== pass) {
-    message.innerText = "Password salah!";
-    return;
-  }
-
-  // LOGIN BERHASIL
-  localStorage.setItem("loginUser", user);
-  localStorage.setItem("role", "user");
-  showShop();
-}
-
-// NAVIGASI
-function showLogin() {
-  registerPage.classList.add("hidden");
-  loginPage.classList.remove("hidden");
-}
-
-function showShop() {
-  loginPage.classList.add("hidden");
-  registerPage.classList.add("hidden");
-  shopPage.classList.remove("hidden");
-
-  welcome.innerText = "Halo, " + localStorage.getItem("loginUser");
-  loadProducts();
-}
-
-function showAdmin() {
-  loginPage.classList.add("hidden");
-  registerPage.classList.add("hidden");
-  adminPage.classList.remove("hidden");
-
-  loadAdminProducts();
-}
-
-// LOGOUT
-function logout() {
-  localStorage.clear();
-  location.reload();
-}
-
-// PRODUCT SYSTEM
-function getProducts() {
-  return JSON.parse(localStorage.getItem("products")) || [];
-}
-
-function saveProducts(data) {
-  localStorage.setItem("products", JSON.stringify(data));
-}
-
-// TAMBAH PRODUK
-function addProduct() {
-  let name = pName.value;
-  let price = pPrice.value;
-  let file = pImage.files[0];
-
-  if(!name || !price || !file) {
-    alert("Lengkapi data!");
-    return;
-  }
-
-  let reader = new FileReader();
-  reader.onload = function(e) {
-    let products = getProducts();
-    products.push({
-      name,
-      price,
-      image: e.target.result
-    });
-    saveProducts(products);
-    loadAdminProducts();
-  }
-  reader.readAsDataURL(file);
-}
-
-// TAMPIL PRODUK USER
-function loadProducts() {
-  let products = getProducts();
-  productList.innerHTML = "";
-
-  if(products.length === 0) {
-    productList.innerHTML = "<p>Belum ada produk</p>";
-    return;
-  }
-
-  products.forEach(p => {
-    productList.innerHTML += `
-      <div class="product">
-        <img src="${p.image}">
-        <h3>${p.name}</h3>
-        <p>Rp${p.price}</p>
-      </div>
-    `;
-  });
-}
-
-// ADMIN VIEW
-function loadAdminProducts() {
-  let products = getProducts();
-  adminProductList.innerHTML = "";
-
-  products.forEach((p, i) => {
-    adminProductList.innerHTML += `
-      <div class="product">
-        <img src="${p.image}">
-        <h3>${p.name}</h3>
-        <p>Rp${p.price}</p>
-        <button onclick="deleteProduct(${i})">Hapus</button>
-      </div>
-    `;
-  });
-}
-
-// HAPUS PRODUK
-function deleteProduct(i) {
-  let products = getProducts();
-  products.splice(i, 1);
-  saveProducts(products);
-  loadAdminProducts();
-}
-
-// AUTO LOGIN
-window.onload = function() {
-  let role = localStorage.getItem("role");
-
-  if(role === "admin") showAdmin();
-  else if(localStorage.getItem("loginUser")) showShop();
-}
-</script>
+    <footer class="text-center py-10 border-t border-gray-800 text-gray-500 text-sm">
+        <p>&copy; 2026 AM Services. Build with ❤️ for Editors.</p>
+    </footer>
 
 </body>
 </html>
